@@ -1,0 +1,14 @@
+[project]
+name = "magcache"
+description = "official implementation of [zehong-ma/MagCache](https://github.com/zehong-ma/MagCache) for ComfyUI"
+version = "1.6.1"
+license = {file = "LICENSE"}
+
+[project.urls]
+Repository = "https://github.com/zehong-ma/MagCache"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "zehongma"
+DisplayName = "ComfyUI-MagCache"
+Icon = ""
