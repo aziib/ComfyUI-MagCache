@@ -16,7 +16,7 @@ MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI
 2. git clone https://github.com/zehong-ma/ComfyUI-MagCache.git
 3. Go to ComfyUI-MagCache folder, `cd ComfyUI-MagCache/`
 4. pip install -r requirements.txt
-
+5. Go to the project folder `ComfyUI/` and run `python main.py`
 ## Usage
 
 ### Download Model Weights
