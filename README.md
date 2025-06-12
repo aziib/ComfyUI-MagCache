@@ -1,7 +1,7 @@
 # ComfyUI-MagCache
 
 ## 🫖 Introduction 
-Magnitude-aware Cache (MagCache) is a training-free caching approach. It estimates the fluctuating differences among model outputs across timesteps based on the robust **magnitude observations**, and thereby accelerating the inference using the error modeling mechanism and adaptive cache strategy. MagCache works well for Video Diffusion Models, Image Diffusion models. For more details and results, please visit our [project page](https://github.com/Zehong-Ma/MagCache).
+Magnitude-aware Cache (MagCache) is a training-free caching approach. It estimates the fluctuating differences among model outputs across timesteps based on the robust **magnitude observations**, and thereby accelerating the inference using the error modeling mechanism and adaptive cache strategy. MagCache works well for Video Diffusion Models, Image Diffusion models. For more details and results, please visit our [project page](https://zehong-ma.github.io/MagCache) and [code](https://github.com/Zehong-Ma/MagCache).
 
 MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI native nodes. ComfyUI-MagCache is easy to use, simply connect the MagCache node with the ComfyUI native nodes for seamless usage.
 
