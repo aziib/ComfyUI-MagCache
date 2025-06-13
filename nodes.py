@@ -521,7 +521,8 @@ class MagCache:
                 c["transformer_options"]["enable_magcache"] = True
             else:
                 c["transformer_options"]["enable_magcache"] = False
-            calibration_len = len(c["transformer_options"]["mag_ratios"])//2
+            calibration_len = len(c["transformer_options"]["mag_ratios"])//2 if "wan2.1" in model_type else len(c["transformer_options"]["mag_ratios"])
+            print(calibration_len)
             c["transformer_options"]["current_step"] = current_step_index if (len(sigmas)-1)==calibration_len else int((current_step_index*(calibration_len/(len(sigmas)-1)))) #interpolate when the steps is not equal to 50
             with context:
                 return model_function(input, timestep, **c)

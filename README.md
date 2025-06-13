@@ -32,7 +32,7 @@ To use MagCache node, simply add `MagCache` node to your workflow after `Load Di
 
 | Models                       |   magcache_thresh |   retention_ratio |    magcache_K     |  
 |:----------------------------:|:-----------------:|:-----------------:|:-----------------:|
-| FLUX                         |        0.24       |         0.1       |         3         |
+| FLUX                         |        0.24       |         0.1       |         5         |
 | HunyuanVideo-T2V             |        0.24       |         0.2       |         6         |
 | Wan2.1-T2V-1.3B              |        0.12       |         0.2       |         4         |
 | Wan2.1-T2V-14B               |        0.24       |         0.2       |         6         |
