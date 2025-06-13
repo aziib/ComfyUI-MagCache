@@ -74,7 +74,7 @@ def magcache_flux_forward(
             self.accumulated_ratio = 1
             self.accumulated_steps = 0
         skip_forward = False
-        if enable_magcache and cur_step!=11:
+        if enable_magcache and cur_step not in [11]:
             cur_mag_ratio = mag_ratios[cur_step]
             self.accumulated_ratio = self.accumulated_ratio*cur_mag_ratio # magnitude ratio between current step and the cached step
             self.accumulated_steps += 1 # skip steps plus 1
