@@ -514,16 +514,12 @@ class MagCache:
                 else:
                     if hasattr(diffusion_model, 'accumulated_rel_l1_distance'):
                         delattr(diffusion_model, 'accumulated_rel_l1_distance')
-            
-            # current_percent = current_step_index / (len(sigmas) - 1)
-            # print("totol steps", len(sigmas))
             if  current_step_index>=int((len(sigmas)-1)*c["transformer_options"]["retention_ratio"]): # start index of magcache
                 c["transformer_options"]["enable_magcache"] = True
             else:
                 c["transformer_options"]["enable_magcache"] = False
             calibration_len = len(c["transformer_options"]["mag_ratios"])//2 if "wan2.1" in model_type else len(c["transformer_options"]["mag_ratios"])
-            print(calibration_len)
-            c["transformer_options"]["current_step"] = current_step_index if (len(sigmas)-1)==calibration_len else int((current_step_index*(calibration_len/(len(sigmas)-1)))) #interpolate when the steps is not equal to 50
+            c["transformer_options"]["current_step"] = current_step_index if (len(sigmas)-1)==calibration_len else int((current_step_index*((calibration_len-1)/(len(sigmas)-2)))) #interpolate when the steps is not equal to 50
             with context:
                 return model_function(input, timestep, **c)
 
