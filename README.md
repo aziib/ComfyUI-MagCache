@@ -7,6 +7,7 @@ MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI
 
 ## 🔥 Latest News 
 - **If you like our project, please give us a star ⭐ on GitHub for the latest update.**
+- [2025/6/16] 🔥 Support Chroma. Thanks @[kabachuha](https://github.com/kabachuha) for the codebase.
 - [2025/6/10] 🔥 Support Wan2.1 T2V&I2V, HunyuanVideo T2V, FLUX-dev T2I
 
 ## Installation
