@@ -10,7 +10,7 @@ MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI
 - [2025/6/17] 🔥 Support [Wan2.1-VACE-1.3B](https://github.com/ali-vilab/VACE), achieving a 1.7× acceleration. 
 - [2025/6/17] 🔥 MagCache is supported by [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper). Thanks @[kijai](https://github.com/kijai). 
 - [2025/6/16] 🔥 Support [Chroma](https://huggingface.co/lodestones/Chroma). Thanks @[kabachuha](https://github.com/kabachuha) for the codebase.
-- [2025/6/10] 🔥 Support [Wan2.1] T2V&I2V, [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) T2V, [FLUX-dev]((https://github.com/black-forest-labs/flux)) T2I
+- [2025/6/10] 🔥 Support [Wan2.1](https://github.com/Wan-Video/Wan2.1) T2V&I2V, [HunyuanVideo](https://github.com/Tencent/HunyuanVideo) T2V, [FLUX-dev]((https://github.com/black-forest-labs/flux)) T2I
 
 ## Installation
 <!-- Installation via ComfyUI-Manager is preferred. Simply search for ComfyUI-MagCache in the list of nodes and click install.
