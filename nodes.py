@@ -23,6 +23,7 @@ SUPPORTED_MODELS_MAG_RATIOS = {
     "wan2.1_t2v_14B": np.array([1.0]*2+[1.02504, 1.03017, 1.00025, 1.00251, 0.9985, 0.99962, 0.99779, 0.99771, 0.9966, 0.99658, 0.99482, 0.99476, 0.99467, 0.99451, 0.99664, 0.99656, 0.99434, 0.99431, 0.99533, 0.99545, 0.99468, 0.99465, 0.99438, 0.99434, 0.99516, 0.99517, 0.99384, 0.9938, 0.99404, 0.99401, 0.99517, 0.99516, 0.99409, 0.99408, 0.99428, 0.99426, 0.99347, 0.99343, 0.99418, 0.99416, 0.99271, 0.99269, 0.99313, 0.99311, 0.99215, 0.99215, 0.99218, 0.99215, 0.99216, 0.99217, 0.99163, 0.99161, 0.99138, 0.99135, 0.98982, 0.9898, 0.98996, 0.98995, 0.9887, 0.98866, 0.98772, 0.9877, 0.98767, 0.98765, 0.98573, 0.9857, 0.98501, 0.98498, 0.9838, 0.98376, 0.98177, 0.98173, 0.98037, 0.98035, 0.97678, 0.97677, 0.97546, 0.97543, 0.97184, 0.97183, 0.96711, 0.96708, 0.96349, 0.96345, 0.95629, 0.95625, 0.94926, 0.94929, 0.93964, 0.93961, 0.92511, 0.92504, 0.90693, 0.90678, 0.8796, 0.87945, 0.86111, 0.86189]),
     "wan2.1_i2v_480p_14B": np.array([1.0]*2+[0.98783, 0.98993, 0.97559, 0.97593, 0.98311, 0.98319, 0.98202, 0.98225, 0.9888, 0.98878, 0.98762, 0.98759, 0.98957, 0.98971, 0.99052, 0.99043, 0.99383, 0.99384, 0.98857, 0.9886, 0.99065, 0.99068, 0.98845, 0.98847, 0.99057, 0.99057, 0.98957, 0.98961, 0.98601, 0.9861, 0.98823, 0.98823, 0.98756, 0.98759, 0.98808, 0.98814, 0.98721, 0.98724, 0.98571, 0.98572, 0.98543, 0.98544, 0.98157, 0.98165, 0.98411, 0.98413, 0.97952, 0.97953, 0.98149, 0.9815, 0.9774, 0.97742, 0.97825, 0.97826, 0.97355, 0.97361, 0.97085, 0.97087, 0.97056, 0.97055, 0.96588, 0.96587, 0.96113, 0.96124, 0.9567, 0.95681, 0.94961, 0.94969, 0.93973, 0.93988, 0.93217, 0.93224, 0.91878, 0.91896, 0.90955, 0.90954, 0.92617, 0.92616]),
     "wan2.1_i2v_720p_14B": np.array([1.0]*2+[0.99428, 0.99498, 0.98588, 0.98621, 0.98273, 0.98281, 0.99018, 0.99023, 0.98911, 0.98917, 0.98646, 0.98652, 0.99454, 0.99456, 0.9891, 0.98909, 0.99124, 0.99127, 0.99102, 0.99103, 0.99215, 0.99212, 0.99515, 0.99515, 0.99576, 0.99572, 0.99068, 0.99072, 0.99097, 0.99097, 0.99166, 0.99169, 0.99041, 0.99042, 0.99201, 0.99198, 0.99101, 0.99101, 0.98599, 0.98603, 0.98845, 0.98844, 0.98848, 0.98851, 0.98862, 0.98857, 0.98718, 0.98719, 0.98497, 0.98497, 0.98264, 0.98263, 0.98389, 0.98393, 0.97938, 0.9794, 0.97535, 0.97536, 0.97498, 0.97499, 0.973, 0.97301, 0.96827, 0.96828, 0.96261, 0.96263, 0.95335, 0.9534, 0.94649, 0.94655, 0.93397, 0.93414, 0.91636, 0.9165, 0.89088, 0.89109, 0.8679, 0.86768]),
+    "wan2.1_vace_1.3B": np.array([1.0]*2+[1.00129, 1.0019, 1.00056, 1.00053, 0.99776, 0.99746, 0.99726, 0.99789, 0.99725, 0.99785, 0.9958, 0.99625, 0.99703, 0.99728, 0.99863, 0.9988, 0.99735, 0.99731, 0.99714, 0.99707, 0.99697, 0.99687, 0.9969, 0.99683, 0.99695, 0.99702, 0.99697, 0.99701, 0.99608, 0.99617, 0.99721, 0.9973, 0.99649, 0.99657, 0.99659, 0.99667, 0.99727, 0.99731, 0.99603, 0.99612, 0.99652, 0.99659, 0.99635, 0.9964, 0.9958, 0.99585, 0.99581, 0.99585, 0.99573, 0.99579, 0.99531, 0.99534, 0.99505, 0.99508, 0.99481, 0.99484, 0.99426, 0.99433, 0.99403, 0.99406, 0.99357, 0.9936, 0.99302, 0.99305, 0.99243, 0.99247, 0.9916, 0.99164, 0.99085, 0.99087, 0.98985, 0.9899, 0.98857, 0.98859, 0.98717, 0.98721, 0.98551, 0.98556, 0.98301, 0.98305, 0.9805, 0.98055, 0.97635, 0.97641, 0.97183, 0.97187, 0.96496, 0.965, 0.95526, 0.95533, 0.94102, 0.94104, 0.91809, 0.91815, 0.87871, 0.87879, 0.80141, 0.80164]),
 }
 
 
@@ -380,7 +381,6 @@ def magcache_wanmodel_forward(
                 0: {'skip_forward': False, 'accumulated_ratio': 1, 'accumulated_err': 0, 'accumulated_steps': 0, 'residual_cache': None}, # condition
                 1: {'skip_forward': False, 'accumulated_ratio': 1, 'accumulated_err': 0, 'accumulated_steps': 0, 'residual_cache': None} # uncondition
             }
-            self.skip_steps = 0
 
         def update_cache_state(cache, cur_step):
             if enable_magcache:
@@ -390,9 +390,6 @@ def magcache_wanmodel_forward(
                 cache['accumulated_err'] += np.abs(1-cache['accumulated_ratio'])
                 if cache['accumulated_err']<=magcache_thresh and cache['accumulated_steps']<=magcache_K:
                     cache['skip_forward'] = True
-                    # self.skip_steps += 1
-                    # print(cur_step, self.skip_steps)
-                    
                 else:
                     cache['skip_forward'] = False
                     cache['accumulated_ratio'] = 1.0
@@ -429,6 +426,113 @@ def magcache_wanmodel_forward(
             for i, k in enumerate(cond_or_uncond):
                 self.magcache_state[k]['residual_cache'] = (x - ori_x)[i*b:(i+1)*b].to(mm.unet_offload_device())
 
+        # head
+        x = self.head(x, e)
+
+        # unpatchify
+        x = self.unpatchify(x, grid_sizes)
+        return x
+
+def magcache_wan_vace_forward(
+        self,
+        x,
+        t,
+        context,
+        vace_context,
+        vace_strength,
+        clip_fea=None,
+        freqs=None,
+        transformer_options={},
+        **kwargs,
+    ):
+        patches_replace = transformer_options.get("patches_replace", {})
+        blocks_replace = patches_replace.get("dit", {})
+        magcache_thresh = transformer_options.get("magcache_thresh")
+        magcache_K = transformer_options.get("magcache_K")
+        cond_or_uncond = transformer_options.get("cond_or_uncond")
+        enable_magcache = transformer_options.get("enable_magcache", True)
+        cur_step = transformer_options.get("current_step")
+        mag_ratios = transformer_options.get("mag_ratios")
+        # embeddings
+        x = self.patch_embedding(x.float()).to(x.dtype)
+        grid_sizes = x.shape[2:]
+        x = x.flatten(2).transpose(1, 2)
+
+        # time embeddings
+        e = self.time_embedding(
+            sinusoidal_embedding_1d(self.freq_dim, t).to(dtype=x[0].dtype))
+        e0 = self.time_projection(e).unflatten(1, (6, self.dim))
+
+        # context
+        context = self.text_embedding(context)
+
+        context_img_len = None
+        if clip_fea is not None:
+            if self.img_emb is not None:
+                context_clip = self.img_emb(clip_fea)  # bs x 257 x dim
+                context = torch.concat([context_clip, context], dim=1)
+            context_img_len = clip_fea.shape[-2]
+
+        orig_shape = list(vace_context.shape)
+        vace_context = vace_context.movedim(0, 1).reshape([-1] + orig_shape[2:])
+        c = self.vace_patch_embedding(vace_context.float()).to(vace_context.dtype)
+        c = c.flatten(2).transpose(1, 2)
+        c = list(c.split(orig_shape[0], dim=0))
+
+        # arguments
+        x_orig = x
+
+        # enable magcache
+        if not hasattr(self, 'magcache_state'):
+            self.magcache_state = {
+                0: {'skip_forward': False, 'accumulated_ratio': 1, 'accumulated_err': 0, 'accumulated_steps': 0, 'residual_cache': None}, # condition
+                1: {'skip_forward': False, 'accumulated_ratio': 1, 'accumulated_err': 0, 'accumulated_steps': 0, 'residual_cache': None} # uncondition
+            }
+        b = int(len(x) / len(cond_or_uncond))
+        def update_cache_state(cache, cur_step):
+            if enable_magcache:
+                cur_scale = mag_ratios[cur_step]
+                cache['accumulated_ratio'] = cache['accumulated_ratio']*cur_scale
+                cache['accumulated_steps'] += cache['accumulated_steps'] + 1
+                cache['accumulated_err'] += np.abs(1-cache['accumulated_ratio'])
+                if cache['accumulated_err']<=magcache_thresh and cache['accumulated_steps']<=magcache_K:
+                    cache['skip_forward'] = True
+                else:
+                    cache['skip_forward'] = False
+                    cache['accumulated_ratio'] = 1.0
+                    cache['accumulated_steps'] = 0
+                    cache['accumulated_err'] = 0
+        
+        for i, k in enumerate(cond_or_uncond):
+            update_cache_state(self.magcache_state[k], cur_step*2+i)
+        skip_forward = False
+        if enable_magcache:
+            for k in cond_or_uncond: #Skip or keep the uncondtional and conditional forward together, which may be different from the original official implementation in MagCache.
+                skip_forward = (skip_forward or self.magcache_state[k]['skip_forward'])
+
+        if skip_forward:
+            for i, k in enumerate(cond_or_uncond):
+                x[i*b:(i+1)*b] += self.magcache_state[k]['residual_cache'].to(x.device)
+        else:
+            for i, block in enumerate(self.blocks):
+                if ("double_block", i) in blocks_replace:
+                    def block_wrap(args):
+                        out = {}
+                        out["img"] = block(args["img"], context=args["txt"], e=args["vec"], freqs=args["pe"], context_img_len=context_img_len)
+                        return out
+                    out = blocks_replace[("double_block", i)]({"img": x, "txt": context, "vec": e0, "pe": freqs}, {"original_block": block_wrap})
+                    x = out["img"]
+                else:
+                    x = block(x, e=e0, freqs=freqs, context=context, context_img_len=context_img_len)
+
+                ii = self.vace_layers_mapping.get(i, None)
+                if ii is not None:
+                    for iii in range(len(c)):
+                        c_skip, c[iii] = self.vace_blocks[ii](c[iii], x=x_orig, e=e0, freqs=freqs, context=context, context_img_len=context_img_len)
+                        x += c_skip * vace_strength[iii]
+                    del c_skip
+            for i, k in enumerate(cond_or_uncond):
+                self.magcache_state[k]['residual_cache'] = (x - x_orig)[i*b:(i+1)*b].to(mm.unet_offload_device())
         # head
         x = self.head(x, e)
 
@@ -483,14 +587,7 @@ def magcache_chroma_forward(
             self.accumulated_ratio = [1.0, 1.0]
             self.accumulated_steps = [0, 0]
             self.residual_cache = [None, None]
-            self.cnt = 0
-        if self.cnt==total_infer_steps*2:
-            self.accumulated_err = [0.0, 0.0]
-            self.accumulated_ratio = [1.0, 1.0]
-            self.accumulated_steps = [0, 0]
-            self.residual_cache = [None, None]
-            self.cnt = 0
-            
+            self.cnt = 0            
         skip_forward = False
         if enable_magcache:  # Skip certain steps if needed
             cur_mag_ratio = mag_ratios[self.cnt]
@@ -585,7 +682,7 @@ class MagCache:
         return {
             "required": {
                 "model": ("MODEL", {"tooltip": "The diffusion model the MagCache will be applied to."}),
-                "model_type": (["flux", "chroma", "hunyuan_video", "wan2.1_t2v_1.3B", "wan2.1_t2v_14B", "wan2.1_i2v_480p_14B", "wan2.1_i2v_720p_14B"], {"default": "wan2.1_t2v_1.3B", "tooltip": "Supported diffusion model."}),
+                "model_type": (["flux", "chroma", "hunyuan_video", "wan2.1_t2v_1.3B", "wan2.1_t2v_14B", "wan2.1_i2v_480p_14B", "wan2.1_i2v_720p_14B", "wan2.1_vace_1.3B", "wan2.1_vace_14B"], {"default": "wan2.1_t2v_1.3B", "tooltip": "Supported diffusion model."}),
                 "magcache_thresh": ("FLOAT", {"default": 0.24, "min": 0.0, "max": 0.3, "step": 0.01, "tooltip": "How strongly to cache the output of diffusion model. This value must be non-negative."}),
                 "retention_ratio": ("FLOAT", {"default": 0.2, "min": 0.1, "max": 0.3, "step": 0.01, "tooltip": "The start percentage of the steps that will apply MagCache."}),
                 "magcache_K": ("INT", {"default": 4, "min": 0, "max": 6, "step": 1, "tooltip": "The maxium skip steps of MagCache."})
@@ -629,6 +726,12 @@ class MagCache:
                 diffusion_model,
                 forward_orig=magcache_hunyuanvideo_forward.__get__(diffusion_model, diffusion_model.__class__)
             )
+        elif "wan2.1_vace" in model_type:
+            is_cfg = True
+            context = patch.multiple(
+                diffusion_model,
+                forward_orig=magcache_wan_vace_forward.__get__(diffusion_model, diffusion_model.__class__)
+            ) 
         elif "wan2.1" in model_type:
             is_cfg = True
             context = patch.multiple(
@@ -662,8 +765,8 @@ class MagCache:
                     if (1 in cond_or_uncond) and hasattr(diffusion_model, 'magcache_state_state'):
                         delattr(diffusion_model, 'magcache_state_state')
                 else:
-                    if hasattr(diffusion_model, 'accumulated_rel_l1_distance'):
-                        delattr(diffusion_model, 'accumulated_rel_l1_distance')
+                    if hasattr(diffusion_model, 'accumulated_err'):
+                        delattr(diffusion_model, 'accumulated_err')
             total_infer_steps = len(sigmas)-1
             if  current_step_index>=int(total_infer_steps*c["transformer_options"]["retention_ratio"]): # start index of magcache
                 c["transformer_options"]["enable_magcache"] = True
@@ -671,7 +774,6 @@ class MagCache:
                 c["transformer_options"]["enable_magcache"] = False
             calibration_len = len(c["transformer_options"]["mag_ratios"])//2 if "wan2.1" in model_type else len(c["transformer_options"]["mag_ratios"])
             c["transformer_options"]["current_step"] = current_step_index if (total_infer_steps)==calibration_len else int((current_step_index*((calibration_len-1)/(len(sigmas)-2)))) #interpolate when the steps is not equal to 50
-            
             if "chroma" in model_type:
                 predefined_steps = len(c["transformer_options"]["mag_ratios"])//2
                 assert total_infer_steps==predefined_steps, f"The inference steps of chroma must be {predefined_steps}."
