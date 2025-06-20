@@ -705,6 +705,8 @@ class MagCache:
         new_model.model_options["transformer_options"]["magcache_thresh"] = magcache_thresh
         new_model.model_options["transformer_options"]["retention_ratio"] = retention_ratio
         new_model.model_options["transformer_options"]["mag_ratios"] = SUPPORTED_MODELS_MAG_RATIOS[model_type]
+        mag_ratios_tensor = torch.from_numpy(mag_ratios).float()
+        new_model.model_options["transformer_options"]["mag_ratios"] = mag_ratios_tensor
         new_model.model_options["transformer_options"]["magcache_K"] = magcache_K
         diffusion_model = new_model.get_model_object("diffusion_model")
 
