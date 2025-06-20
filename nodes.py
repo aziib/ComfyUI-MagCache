@@ -386,7 +386,7 @@ def magcache_wanmodel_forward(
             if enable_magcache:
                 cur_scale = mag_ratios[cur_step]
                 cache['accumulated_ratio'] = cache['accumulated_ratio']*cur_scale
-                cache['accumulated_steps'] += cache['accumulated_steps'] + 1
+                cache['accumulated_steps'] = cache['accumulated_steps'] + 1
                 cache['accumulated_err'] += np.abs(1-cache['accumulated_ratio'])
                 if cache['accumulated_err']<=magcache_thresh and cache['accumulated_steps']<=magcache_K:
                     cache['skip_forward'] = True
@@ -493,7 +493,7 @@ def magcache_wan_vace_forward(
             if enable_magcache:
                 cur_scale = mag_ratios[cur_step]
                 cache['accumulated_ratio'] = cache['accumulated_ratio']*cur_scale
-                cache['accumulated_steps'] += cache['accumulated_steps'] + 1
+                cache['accumulated_steps'] = cache['accumulated_steps'] + 1
                 cache['accumulated_err'] += np.abs(1-cache['accumulated_ratio'])
                 if cache['accumulated_err']<=magcache_thresh and cache['accumulated_steps']<=magcache_K:
                     cache['skip_forward'] = True
