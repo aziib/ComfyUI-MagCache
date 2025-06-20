@@ -685,7 +685,9 @@ class MagCache:
                 "model_type": (["flux", "chroma", "hunyuan_video", "wan2.1_t2v_1.3B", "wan2.1_t2v_14B", "wan2.1_i2v_480p_14B", "wan2.1_i2v_720p_14B", "wan2.1_vace_1.3B", "wan2.1_vace_14B"], {"default": "wan2.1_t2v_1.3B", "tooltip": "Supported diffusion model."}),
                 "magcache_thresh": ("FLOAT", {"default": 0.24, "min": 0.0, "max": 0.3, "step": 0.01, "tooltip": "How strongly to cache the output of diffusion model. This value must be non-negative."}),
                 "retention_ratio": ("FLOAT", {"default": 0.2, "min": 0.1, "max": 0.3, "step": 0.01, "tooltip": "The start percentage of the steps that will apply MagCache."}),
-                "magcache_K": ("INT", {"default": 4, "min": 0, "max": 6, "step": 1, "tooltip": "The maxium skip steps of MagCache."})
+                "magcache_K": ("INT", {"default": 4, "min": 0, "max": 6, "step": 1, "tooltip": "The maxium skip steps of MagCache."}),
+                "start_step": ("INT", {"default": 0, "min": 0, "max": 100, "step": 1, "tooltip": "The maxium skip steps of MagCache."}),
+                "end_step": ("INT", {"default": -1, "min": -100, "max": 100, "step": 1, "tooltip": "The maxium skip steps of MagCache."}),
             }
         }
     
@@ -695,7 +697,7 @@ class MagCache:
     CATEGORY = "MagCache"
     TITLE = "MagCache"
     
-    def apply_magcache(self, model, model_type: str, magcache_thresh: float, retention_ratio: float, magcache_K: int):
+    def apply_magcache(self, model, model_type: str, magcache_thresh: float, retention_ratio: float, magcache_K: int, start_step: int, end_step:int):
         if magcache_thresh == 0:
             return (model,)
 
@@ -704,10 +706,12 @@ class MagCache:
             new_model.model_options['transformer_options'] = {}
         new_model.model_options["transformer_options"]["magcache_thresh"] = magcache_thresh
         new_model.model_options["transformer_options"]["retention_ratio"] = retention_ratio
-        new_model.model_options["transformer_options"]["mag_ratios"] = SUPPORTED_MODELS_MAG_RATIOS[model_type]
+        mag_ratios = SUPPORTED_MODELS_MAG_RATIOS[model_type]
         mag_ratios_tensor = torch.from_numpy(mag_ratios).float()
         new_model.model_options["transformer_options"]["mag_ratios"] = mag_ratios_tensor
         new_model.model_options["transformer_options"]["magcache_K"] = magcache_K
+        new_model.model_options["transformer_options"]["start_step"] = start_step
+        new_model.model_options["transformer_options"]["end_step"] = end_step
         diffusion_model = new_model.get_model_object("diffusion_model")
 
         if "flux" in model_type:
@@ -769,8 +773,13 @@ class MagCache:
                 else:
                     if hasattr(diffusion_model, 'accumulated_err'):
                         delattr(diffusion_model, 'accumulated_err')
+            
             total_infer_steps = len(sigmas)-1
-            if  current_step_index>=int(total_infer_steps*c["transformer_options"]["retention_ratio"]): # start index of magcache
+            start_step = c["transformer_options"]["start_step"]
+            end_step = c["transformer_options"]["end_step"]
+            if end_step<0:
+                end_step = total_infer_steps + end_step
+            if  current_step_index>=int(total_infer_steps*c["transformer_options"]["retention_ratio"]) and (start_step<=current_step_index<=end_step): # start index of magcache
                 c["transformer_options"]["enable_magcache"] = True
             else:
                 c["transformer_options"]["enable_magcache"] = False
