@@ -7,7 +7,7 @@ MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI
 
 ## 🔥 Latest News 
 - **If you like our project, please give us a star ⭐ on GitHub for the latest update.**
-- [2025/6/30] 🔥 Support [Flux-Kontext](https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev) with 2x speedup. Please see the demo [here]((https://github.com/user-attachments/assets/79d5f654-5828-442d-b1a1-9b754c17e457)).
+- [2025/6/30] 🔥 Support [Flux-Kontext](https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev) with 2x speedup. Please see the demo [here](https://github.com/user-attachments/assets/79d5f654-5828-442d-b1a1-9b754c17e457).
 - [2025/6/19] 🔥 Support [FramePack](https://github.com/lllyasviel/FramePack) with Gradio Demo in [MagCache-FramePack](https://github.com/Zehong-Ma/MagCache).
 - [2025/6/18] 👉 We're collecting the best parameter settings from the community. <br>     👉**Open this [discussion issue](https://github.com/Zehong-Ma/ComfyUI-MagCache/issues/15) to contribute your configuration!**
 - [2025/6/17] 🔥 Support [Wan2.1-VACE-1.3B](https://github.com/ali-vilab/VACE), achieving a 1.7× acceleration. 
