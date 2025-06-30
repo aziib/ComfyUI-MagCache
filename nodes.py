@@ -17,6 +17,7 @@ from comfy.ldm.wan.model import sinusoidal_embedding_1d
 
 SUPPORTED_MODELS_MAG_RATIOS = {
     "flux": np.array([1.0]+[1.21094, 1.11719, 1.07812, 1.0625, 1.03906, 1.03125, 1.03906, 1.02344, 1.03125, 1.02344, 0.98047, 1.01562, 1.00781, 1.0, 1.00781, 1.0, 1.00781, 1.0, 1.0, 0.99609, 0.99609, 0.98047, 0.98828, 0.96484, 0.95703, 0.93359, 0.89062]),
+    "flux_kontext": np.array([1.0]+[1.21875, 1.0625, 1.03125, 1.03125, 1.0, 1.00781, 1.03906, 0.98047, 1.03125, 0.96875, 1.02344, 1.0, 0.99219, 1.02344, 0.98047, 0.95703, 0.98828, 0.98047, 0.88672]),
     "chroma": np.array([1.0]*2+[1.00781, 1.01562, 1.03906, 1.03906, 1.05469, 1.05469, 1.07031, 1.07031, 1.04688, 1.04688, 1.03906, 1.03906, 1.03906, 1.03906, 1.01562, 1.01562, 1.05469, 1.05469, 0.99609, 0.99609, 1.02344, 1.02344, 1.01562, 1.01562, 0.99609, 0.99609, 1.0, 1.0, 0.99219, 0.99219, 1.00781, 1.00781, 1.00781, 1.00781, 0.97656, 0.97656, 0.98828, 0.98828, 0.97266, 0.97266, 1.0, 1.0, 0.93359, 0.93359, 0.94922, 0.94922, 0.92578, 0.92578, 1.0625, 1.0625]),
     "hunyuan_video": np.array([1.0]+[1.0754, 1.27807, 1.11596, 1.09504, 1.05188, 1.00844, 1.05779, 1.00657, 1.04142, 1.03101, 1.00679, 1.02556, 1.00908, 1.06949, 1.05438, 1.02214, 1.02321, 1.03019, 1.00779, 1.03381, 1.01886, 1.01161, 1.02968, 1.00544, 1.02822, 1.00689, 1.02119, 1.0105, 1.01044, 1.01572, 1.02972, 1.0094, 1.02368, 1.0226, 0.98965, 1.01588, 1.02146, 1.0018, 1.01687, 0.99436, 1.00283, 1.01139, 0.97122, 0.98251, 0.94513, 0.97656, 0.90943, 0.85703, 0.75456]),
     "wan2.1_t2v_1.3B": np.array([1.0]*2+[1.0124, 1.02213, 1.00166, 1.0041, 0.99791, 1.00061, 0.99682, 0.99762, 0.99634, 0.99685, 0.99567, 0.99586, 0.99416, 0.99422, 0.99578, 0.99575, 0.9957, 0.99563, 0.99511, 0.99506, 0.99535, 0.99531, 0.99552, 0.99549, 0.99541, 0.99539, 0.9954, 0.99536, 0.99489, 0.99485, 0.99518, 0.99514, 0.99484, 0.99478, 0.99481, 0.99479, 0.99415, 0.99413, 0.99419, 0.99416, 0.99396, 0.99393, 0.99388, 0.99386, 0.99349, 0.99349, 0.99309, 0.99304, 0.9927, 0.9927, 0.99228, 0.99226, 0.99171, 0.9917, 0.99137, 0.99135, 0.99068, 0.99063, 0.99005, 0.99003, 0.98944, 0.98942, 0.98849, 0.98849, 0.98758, 0.98757, 0.98644, 0.98643, 0.98504, 0.98503, 0.9836, 0.98359, 0.98202, 0.98201, 0.97977, 0.97978, 0.97717, 0.97718, 0.9741, 0.97411, 0.97003, 0.97002, 0.96538, 0.96541, 0.9593, 0.95933, 0.95086, 0.95089, 0.94013, 0.94019, 0.92402, 0.92414, 0.90241, 0.9026, 0.86821, 0.86868, 0.81838, 0.81939]),
@@ -682,7 +683,7 @@ class MagCache:
         return {
             "required": {
                 "model": ("MODEL", {"tooltip": "The diffusion model the MagCache will be applied to."}),
-                "model_type": (["flux", "chroma", "hunyuan_video", "wan2.1_t2v_1.3B", "wan2.1_t2v_14B", "wan2.1_i2v_480p_14B", "wan2.1_i2v_720p_14B", "wan2.1_vace_1.3B", "wan2.1_vace_14B"], {"default": "wan2.1_t2v_1.3B", "tooltip": "Supported diffusion model."}),
+                "model_type": (["flux", "flux_kontext", "chroma", "hunyuan_video", "wan2.1_t2v_1.3B", "wan2.1_t2v_14B", "wan2.1_i2v_480p_14B", "wan2.1_i2v_720p_14B", "wan2.1_vace_1.3B", "wan2.1_vace_14B"], {"default": "wan2.1_t2v_1.3B", "tooltip": "Supported diffusion model."}),
                 "magcache_thresh": ("FLOAT", {"default": 0.24, "min": 0.0, "max": 0.3, "step": 0.01, "tooltip": "How strongly to cache the output of diffusion model. This value must be non-negative."}),
                 "retention_ratio": ("FLOAT", {"default": 0.2, "min": 0.1, "max": 0.3, "step": 0.01, "tooltip": "The start percentage of the steps that will apply MagCache."}),
                 "magcache_K": ("INT", {"default": 4, "min": 0, "max": 6, "step": 1, "tooltip": "The maxium skip steps of MagCache."}),
@@ -784,7 +785,7 @@ class MagCache:
             else:
                 c["transformer_options"]["enable_magcache"] = False
             calibration_len = len(c["transformer_options"]["mag_ratios"])//2 if "wan2.1" in model_type else len(c["transformer_options"]["mag_ratios"])
-            c["transformer_options"]["current_step"] = current_step_index if (total_infer_steps)==calibration_len else int((current_step_index*((calibration_len-1)/(len(sigmas)-2)))) #interpolate when the steps is not equal to 50
+            c["transformer_options"]["current_step"] = current_step_index if (total_infer_steps)==calibration_len else int((current_step_index*((calibration_len-1)/(len(sigmas)-2)))) #interpolate when the steps is not equal to pre-defined steps
             if "chroma" in model_type:
                 predefined_steps = len(c["transformer_options"]["mag_ratios"])//2
                 assert total_infer_steps==predefined_steps, f"The inference steps of chroma must be {predefined_steps}."

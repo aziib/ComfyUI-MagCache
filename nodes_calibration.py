@@ -15,6 +15,173 @@ from comfy.ldm.lightricks.symmetric_patchifier import latent_to_pixel_coords
 from comfy.ldm.wan.model import sinusoidal_embedding_1d
 
 
+def magcache_flux_calibration_forward(
+        self,
+        img: Tensor,
+        img_ids: Tensor,
+        txt: Tensor,
+        txt_ids: Tensor,
+        timesteps: Tensor,
+        y: Tensor,
+        guidance: Tensor = None,
+        control = None,
+        transformer_options={},
+        attn_mask: Tensor = None,
+    ) -> Tensor:
+        patches_replace = transformer_options.get("patches_replace", {})
+        total_infer_steps = transformer_options.get("total_infer_steps")
+    
+        if not hasattr(self, 'calibration_data'):
+            self.calibration_data = {
+                'norm_ratios': [],
+                'norm_stds': [],
+                'cos_dists': [],
+                'step_count': 0
+            }
+            self.previous_residual = None
+        
+        
+        if img.ndim != 3 or txt.ndim != 3:
+            raise ValueError("Input img and txt tensors must have 3 dimensions.")
+
+        # running on sequences img
+        img = self.img_in(img)
+        vec = self.time_in(timestep_embedding(timesteps, 256).to(img.dtype))
+        if self.params.guidance_embed:
+            if guidance is None:
+                raise ValueError("Didn't get guidance strength for guidance distilled model.")
+            vec = vec + self.guidance_in(timestep_embedding(guidance, 256).to(img.dtype))
+
+        vec = vec + self.vector_in(y[:,:self.params.vec_in_dim])
+        txt = self.txt_in(txt)
+
+        if img_ids is not None:
+            ids = torch.cat((txt_ids, img_ids), dim=1)
+            pe = self.pe_embedder(ids)
+        else:
+            pe = None
+
+        blocks_replace = patches_replace.get("dit", {})
+
+        ori_img = img.clone()
+        for i, block in enumerate(self.double_blocks):
+            if ("double_block", i) in blocks_replace:
+                def block_wrap(args):
+                    out = {}
+                    out["img"], out["txt"] = block(img=args["img"],
+                                                txt=args["txt"],
+                                                vec=args["vec"],
+                                                pe=args["pe"],
+                                                attn_mask=args.get("attn_mask"))
+                    return out
+
+                out = blocks_replace[("double_block", i)]({"img": img,
+                                                        "txt": txt,
+                                                        "vec": vec,
+                                                        "pe": pe,
+                                                        "attn_mask": attn_mask},
+                                                        {"original_block": block_wrap})
+                txt = out["txt"]
+                img = out["img"]
+            else:
+                img, txt = block(img=img,
+                                txt=txt,
+                                vec=vec,
+                                pe=pe,
+                                attn_mask=attn_mask)
+
+            if control is not None: # Controlnet
+                control_i = control.get("input")
+                if i < len(control_i):
+                    add = control_i[i]
+                    if add is not None:
+                        img += add
+
+            # PuLID attention
+            if getattr(self, "pulid_data", {}):
+                if i % self.pulid_double_interval == 0:
+                    # Will calculate influence of all pulid nodes at once
+                    for _, node_data in self.pulid_data.items():
+                        if torch.any((node_data['sigma_start'] >= timesteps)
+                                    & (timesteps >= node_data['sigma_end'])):
+                            img = img + node_data['weight'] * self.pulid_ca[ca_idx](node_data['embedding'], img)
+                    ca_idx += 1
+
+        img = torch.cat((txt, img), 1)
+
+        for i, block in enumerate(self.single_blocks):
+            if ("single_block", i) in blocks_replace:
+                def block_wrap(args):
+                    out = {}
+                    out["img"] = block(args["img"],
+                                    vec=args["vec"],
+                                    pe=args["pe"],
+                                    attn_mask=args.get("attn_mask"))
+                    return out
+
+                out = blocks_replace[("single_block", i)]({"img": img,
+                                                        "vec": vec,
+                                                        "pe": pe,
+                                                        "attn_mask": attn_mask}, 
+                                                        {"original_block": block_wrap})
+                img = out["img"]
+            else:
+                img = block(img, vec=vec, pe=pe, attn_mask=attn_mask)
+
+            if control is not None: # Controlnet
+                control_o = control.get("output")
+                if i < len(control_o):
+                    add = control_o[i]
+                    if add is not None:
+                        img[:, txt.shape[1] :, ...] += add
+
+            # PuLID attention
+            if getattr(self, "pulid_data", {}):
+                real_img, txt = img[:, txt.shape[1]:, ...], img[:, :txt.shape[1], ...]
+                if i % self.pulid_single_interval == 0:
+                    # Will calculate influence of all nodes at once
+                    for _, node_data in self.pulid_data.items():
+                        if torch.any((node_data['sigma_start'] >= timesteps)
+                                    & (timesteps >= node_data['sigma_end'])):
+                            real_img = real_img + node_data['weight'] * self.pulid_ca[ca_idx](node_data['embedding'], real_img)
+                    ca_idx += 1
+                img = torch.cat((txt, real_img), 1)
+
+        img = img[:, txt.shape[1] :, ...]
+        cur_residual = img - ori_img
+        if self.calibration_data['step_count'] >= 1:
+            # Calculate calibration metrics
+            norm_ratio = (cur_residual.norm(dim=-1) / self.previous_residual.norm(dim=-1)).mean().item()
+            norm_std = (cur_residual.norm(dim=-1) / self.previous_residual.norm(dim=-1)).std().item()
+            cos_dist = (1 - torch.nn.functional.cosine_similarity(cur_residual, self.previous_residual, dim=-1, eps=1e-8)).mean().item()
+            
+            # Store metrics
+            self.calibration_data['norm_ratios'].append(round(norm_ratio, 5))
+            self.calibration_data['norm_stds'].append(round(norm_std, 5))
+            self.calibration_data['cos_dists'].append(round(cos_dist, 5))
+            if self.calibration_data['step_count'] >= (total_infer_steps-1):
+                print("mag_ratios")
+                print(self.calibration_data['norm_ratios'])
+                print("mag_ratio_std")
+                print(self.calibration_data['norm_stds'])
+                print("mag_cos_dist")
+                print(self.calibration_data['cos_dists'])
+        self.previous_residual = cur_residual
+        self.calibration_data['step_count'] += 1  
+        if total_infer_steps == self.calibration_data['step_count']: # del cache when calibration multiple times
+            del self.calibration_data
+            self.calibration_data = {
+                'norm_ratios': [],
+                'norm_stds': [],
+                'cos_dists': [],
+                'step_count': 0
+            }
+            self.previous_residual = None
+            
+        img = self.final_layer(img, vec)  # (N, T, patch_size ** 2 * out_channels)
+        
+        return img
+
 def magcache_chroma_calibration_forward(
         self,
         img: Tensor,
@@ -167,7 +334,7 @@ class MagCacheCalibration:
         return {
             "required": {
                 "model": ("MODEL", {"tooltip": "The diffusion model the MagCache will be applied to."}),
-                "model_type": (["chroma_calibration"], {"default": "chroma_calibration", "tooltip": "Supported diffusion model."}),
+                "model_type": (["chroma_calibration", "flux_calibration", "flux_kontext_calibration"], {"default": "chroma_calibration", "tooltip": "Supported diffusion model."}),
             }
         }
     
@@ -188,6 +355,12 @@ class MagCacheCalibration:
             context = patch.multiple(
                 diffusion_model,
                 forward_orig=magcache_chroma_calibration_forward.__get__(diffusion_model, diffusion_model.__class__)
+            )
+        elif "flux_calibration" in model_type or "flux_kontext_calibration" in model_type:
+            is_cfg = False
+            context = patch.multiple(
+                diffusion_model,
+                forward_orig=magcache_flux_calibration_forward.__get__(diffusion_model, diffusion_model.__class__)
             )
         else:
             raise ValueError(f"Unknown type {model_type}")
