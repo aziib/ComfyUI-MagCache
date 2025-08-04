@@ -386,8 +386,8 @@ class MagCacheCalibration:
             if current_step_index == 0:
                 if is_cfg:
                     # uncond first
-                    if (1 in cond_or_uncond) and hasattr(diffusion_model, 'magcache_state_state'):
-                        delattr(diffusion_model, 'magcache_state_state')
+                    if (1 in cond_or_uncond) and hasattr(diffusion_model, 'magcache_state'):
+                        delattr(diffusion_model, 'magcache_state')
                 else:
                     if hasattr(diffusion_model, 'accumulated_rel_l1_distance'):
                         delattr(diffusion_model, 'accumulated_rel_l1_distance')
