@@ -1,5 +1,8 @@
 # ComfyUI-MagCache
 
+## ‼️ Attention!
+this is just a fork from ZehongMa that i've fixed to minimize error for wan video. use this if you have problem on the original repositories.
+
 ## 🫖 Introduction 
 Magnitude-aware Cache (MagCache) is a training-free caching approach. It estimates the fluctuating differences among model outputs across timesteps based on the robust **magnitude observations**, and thereby accelerating the inference using the error modeling mechanism and adaptive cache strategy. MagCache works well for Video Diffusion Models, Image Diffusion models. For more details and results, please visit our [project page](https://zehong-ma.github.io/MagCache) and [code](https://github.com/Zehong-Ma/MagCache).
 
@@ -19,7 +22,7 @@ MagCache has now been integrated into ComfyUI and is compatible with the ComfyUI
 <!-- Installation via ComfyUI-Manager is preferred. Simply search for ComfyUI-MagCache in the list of nodes and click install.
 ### Manual installation -->
 1. Go to comfyUI custom_nodes folder, `ComfyUI/custom_nodes/`
-2. git clone https://github.com/zehong-ma/ComfyUI-MagCache.git
+2. git clone https://github.com/aziib/ComfyUI-MagCache.git
 3. Go to ComfyUI-MagCache folder, `cd ComfyUI-MagCache/`
 4. pip install -r requirements.txt
 5. Go to the project folder `ComfyUI/` and run `python main.py`
