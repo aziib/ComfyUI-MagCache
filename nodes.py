@@ -403,10 +403,14 @@ def magcache_wanmodel_forward(
         for i, k in enumerate(cond_or_uncond):
             update_cache_state(self.magcache_state[k], cur_step*2+i)
 
-        if enable_magcache:
-            skip_forward = False
+        skip_forward = enable_magcache
+        if skip_forward:
+            # To skip the unified forward pass, all components (cond/uncond) must be ready.
+            # A component is ready if its skip flag is set AND its cache has been previously populated.
             for k in cond_or_uncond: #Skip or keep the uncondtional and conditional forward together, which may be different from the original official implementation in MagCache.
-                skip_forward = (skip_forward or self.magcache_state[k]['skip_forward'])
+                if not (self.magcache_state[k]['skip_forward'] and self.magcache_state[k]['residual_cache'] is not None):
+                    skip_forward = False
+                    break
         else:
             skip_forward = False
 
@@ -507,10 +511,14 @@ def magcache_wan_vace_forward(
         
         for i, k in enumerate(cond_or_uncond):
             update_cache_state(self.magcache_state[k], cur_step*2+i)
-        skip_forward = False
-        if enable_magcache:
+        sskip_forward = enable_magcache
+        if skip_forward:
+            # To skip the unified forward pass, all components (cond/uncond) must be ready.
+            # A component is ready if its skip flag is set AND its cache has been previously populated.
             for k in cond_or_uncond: #Skip or keep the uncondtional and conditional forward together, which may be different from the original official implementation in MagCache.
-                skip_forward = (skip_forward or self.magcache_state[k]['skip_forward'])
+                if not (self.magcache_state[k]['skip_forward'] and self.magcache_state[k]['residual_cache'] is not None):
+                    skip_forward = False
+                    break
 
         if skip_forward:
             for i, k in enumerate(cond_or_uncond):
