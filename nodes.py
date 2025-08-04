@@ -377,6 +377,15 @@ def magcache_wanmodel_forward(
 
         blocks_replace = patches_replace.get("dit", {})
 
+        # [FIX] Check for latent dimension mismatch and reset cache if necessary
+        if hasattr(self, 'magcache_state') and self.magcache_state[0]['residual_cache'] is not None:
+            # x is flattened, so we check the number of tokens (patches) in dim 1.
+            cached_tokens = self.magcache_state[0]['residual_cache'].shape[1]
+            current_tokens = x.shape[1]
+            if cached_tokens != current_tokens:
+                # The input latent shape has changed. Invalidate the entire cache.
+                delattr(self, 'magcache_state')
+
         # enable magcache
         if not hasattr(self, 'magcache_state'):
             self.magcache_state = {
@@ -403,16 +412,15 @@ def magcache_wanmodel_forward(
         for i, k in enumerate(cond_or_uncond):
             update_cache_state(self.magcache_state[k], cur_step*2+i)
 
+        # [FIX] Corrected skip_forward logic
         skip_forward = enable_magcache
         if skip_forward:
-            # To skip the unified forward pass, all components (cond/uncond) must be ready.
-            # A component is ready if its skip flag is set AND its cache has been previously populated.
-            for k in cond_or_uncond: #Skip or keep the uncondtional and conditional forward together, which may be different from the original official implementation in MagCache.
+            for k in cond_or_uncond:
+                # To skip the unified forward pass, all components (cond/uncond) must be ready.
+                # A component is ready if its skip flag is set AND its cache has been previously populated.
                 if not (self.magcache_state[k]['skip_forward'] and self.magcache_state[k]['residual_cache'] is not None):
                     skip_forward = False
                     break
-        else:
-            skip_forward = False
 
         if skip_forward:
             for i, k in enumerate(cond_or_uncond):
@@ -488,6 +496,15 @@ def magcache_wan_vace_forward(
         # arguments
         x_orig = x
 
+        # [FIX] Check for latent dimension mismatch and reset cache if necessary
+        if hasattr(self, 'magcache_state') and self.magcache_state[0]['residual_cache'] is not None:
+            # x is flattened, so we check the number of tokens (patches) in dim 1.
+            cached_tokens = self.magcache_state[0]['residual_cache'].shape[1]
+            current_tokens = x.shape[1]
+            if cached_tokens != current_tokens:
+                # The input latent shape has changed. Invalidate the entire cache.
+                delattr(self, 'magcache_state')
+
         # enable magcache
         if not hasattr(self, 'magcache_state'):
             self.magcache_state = {
@@ -511,11 +528,13 @@ def magcache_wan_vace_forward(
         
         for i, k in enumerate(cond_or_uncond):
             update_cache_state(self.magcache_state[k], cur_step*2+i)
-        sskip_forward = enable_magcache
+        
+        # [FIX] Corrected skip_forward logic
+        skip_forward = enable_magcache
         if skip_forward:
-            # To skip the unified forward pass, all components (cond/uncond) must be ready.
-            # A component is ready if its skip flag is set AND its cache has been previously populated.
-            for k in cond_or_uncond: #Skip or keep the uncondtional and conditional forward together, which may be different from the original official implementation in MagCache.
+            for k in cond_or_uncond:
+                # To skip the unified forward pass, all components (cond/uncond) must be ready.
+                # A component is ready if its skip flag is set AND its cache has been previously populated.
                 if not (self.magcache_state[k]['skip_forward'] and self.magcache_state[k]['residual_cache'] is not None):
                     skip_forward = False
                     break
