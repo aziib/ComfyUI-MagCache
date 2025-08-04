@@ -54,6 +54,7 @@ To use MagCache node, simply add `MagCache` node to your workflow after `Load Di
 | Wan2.1-I2V-480P-14B          |        0.24       |         0.2       |         6         |
 | Wan2.1-I2V-720P-14B          |        0.24       |         0.2       |         6         |
 | Wan2.1-VACE-1.3B             |        0.02       |         0.2       |         3         |
+| Wan2.1-VACE-14B             |        0.02       |         0.2       |         3         |
 
 </div>
 
