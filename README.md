@@ -1,7 +1,7 @@
 # ComfyUI-MagCache
 
 ## ‼️ Attention!
-this is just a fork from ZehongMa that i've fixed to minimize error for wan video. use this if you have problem on the original repositories.
+this is just a fork from Zehong-Ma that i've fixed to minimize error for wan video. use this if you have problem on the original repositories.
 
 ## 🫖 Introduction 
 Magnitude-aware Cache (MagCache) is a training-free caching approach. It estimates the fluctuating differences among model outputs across timesteps based on the robust **magnitude observations**, and thereby accelerating the inference using the error modeling mechanism and adaptive cache strategy. MagCache works well for Video Diffusion Models, Image Diffusion models. For more details and results, please visit our [project page](https://zehong-ma.github.io/MagCache) and [code](https://github.com/Zehong-Ma/MagCache).
@@ -69,5 +69,5 @@ To use Compile Model node, simply add `Compile Model` node to your workflow afte
 <!-- The usage is shown below: -->
 <!-- ![](./assets/compile.png) -->
 
-## Acknowledgments
-Thanks to [ComfyUI-TeaCache](https://github.com/welltop-cn/ComfyUI-TeaCache), [ComfyUI](https://github.com/comfyanonymous/ComfyUI), [ComfyUI-MagCache](https://github.com/wildminder/ComfyUI-MagCache), [MagCache](https://github.com/Zehong-Ma/MagCache/), [TeaCache](https://github.com/ali-vilab/TeaCache), [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), [FLUX](https://github.com/black-forest-labs/flux), [Chroma](https://huggingface.co/lodestones/Chroma), and [Wan2.1](https://github.com/Wan-Video/Wan2.1).
+## Acknowledgments 
+Thanks to [Zehong-Ma](https://github.com/Zehong-Ma), [ComfyUI-TeaCache](https://github.com/welltop-cn/ComfyUI-TeaCache), [ComfyUI](https://github.com/comfyanonymous/ComfyUI), [ComfyUI-MagCache](https://github.com/wildminder/ComfyUI-MagCache), [MagCache](https://github.com/Zehong-Ma/MagCache/), [TeaCache](https://github.com/ali-vilab/TeaCache), [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), [FLUX](https://github.com/black-forest-labs/flux), [Chroma](https://huggingface.co/lodestones/Chroma), and [Wan2.1](https://github.com/Wan-Video/Wan2.1).
